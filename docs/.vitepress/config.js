@@ -56,11 +56,19 @@ export default {
           collapsible: true,
           items: [
             { text: 'CLI 学习平台', link: '/blogs/projects/cli-tutor' },
+            { text: '前端组件平台', link: '/blogs/projects/frontend-components' },
+            { text: '文字水波纹', link: '/blogs/projects/pretext-ripple' },
+          ]
+        },
+        {
+          text: '工具',
+          collapsed: false,
+          collapsible: true,
+          items: [
             { text: 'Windows 设置启动器', link: '/blogs/projects/settings-nav' },
             { text: '极简待办应用', link: '/blogs/projects/todo-app' },
             { text: 'Win11 桌面提醒', link: '/blogs/projects/win11-reminder' },
-            { text: '前端组件平台', link: '/blogs/projects/frontend-components' },
-            { text: '文字水波纹', link: '/blogs/projects/pretext-ripple' },
+            { text: '歌单迁移工具', link: '/blogs/tools/lx-music' },
           ]
         },
         {
@@ -69,6 +77,7 @@ export default {
           collapsible: true,
           items: [
             { text: 'AI 情报推送系统', link: '/blogs/ai/ai-radar' },
+            { text: 'AI HOT 情报流', link: '/blogs/ai/ai-hot-rss' },
           ]
         },
         {
@@ -79,14 +88,7 @@ export default {
             { text: '跨平台打包方案', link: '/blogs/cross-platform/pakeplus' },
           ]
         },
-        {
-          text: '工具开发',
-          collapsed: false,
-          collapsible: true,
-          items: [
-            { text: '歌单迁移工具', link: '/blogs/tools/lx-music' },
-          ]
-        },
+
       ],
       '/projects/': [
         {
@@ -102,6 +104,7 @@ export default {
             { text: '文字水波纹', link: '/projects/pretext-ripple' },
             { text: 'lx-music-import', link: '/projects/lx-music' },
             { text: 'AI 情报推送', link: '/projects/ai-radar' },
+            { text: 'AI HOT 情报流', link: '/projects/ai-hot-rss-feishu' },
             { text: 'PakePlus', link: '/projects/pakeplus' },
           ]
         }
