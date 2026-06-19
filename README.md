@@ -36,6 +36,24 @@ npm run build
 npm run serve
 ```
 
+## 目录结构
+
+```text
+.
+├── docs/
+│   ├── .vitepress/            # VitePress 配置、主题与路由设置
+│   ├── blogs/                 # 个人技术博客 Markdown 源文件
+│   ├── weekly/                # 阶段性周记 Markdown 源文件
+│   ├── projects/              # 个人项目作品展示页面
+│   ├── resume/                # 个人技术简历
+│   ├── public/                # 静态资源存放处
+│   └── index.md               # 博客主页
+├── scripts/
+│   └── index.js               # 构建后图片资源拷贝脚本
+├── package.json               # 依赖与打包脚本配置
+└── README.md                  # 说明文档
+```
+
 ## 许可证
 
 基于 [MIT License](./LICENSE) 协议开源。
