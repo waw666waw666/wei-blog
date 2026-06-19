@@ -1,3 +1,5 @@
 node_modules
 public
 .DS_Store
+docs/.vitepress/cache
+docs/.vitepress/cache_temp_*
