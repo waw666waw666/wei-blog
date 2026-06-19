@@ -1,5 +1,33 @@
 # 博客
 
+## AI 教程
+
+### [Claude Code 从入门到精通](/blogs/ai-tutorials/claude-code-guide)
+踩坑总结的使用笔记：代码审查、重构、写测试、调试，以及 /compact、CLAUDE.md 等进阶技巧。
+
+### [Prompt 工程实战：从新手到老手](/blogs/ai-tutorials/ai-prompt-engineering)
+用了一年多 AI 写代码，总结的 RICE 框架（Role-Intent-Context-Expectation）和实战 Prompt 模板。
+
+### [搭建个人 AI 工作流](/blogs/ai-tutorials/ai-workflow)
+我的 AI 工具矩阵、AI 辅助编程三阶段工作流、省钱技巧和自动化实践。
+
+### [DeepSeek 模型使用指南](/blogs/ai-tutorials/deepseek-guide)
+从 API 调用到 Ollama 本地部署，以及实际使用体验和踩坑记录。
+
+### [我用 AI 做独立开发的经验](/blogs/ai-tutorials/indie-dev-ai)
+独立开发者的 AI 工具链、项目启动流程，以及 AI 做不好哪些事。
+
+## 开发教程
+
+### [VitePress 从零搭建个人博客](/blogs/dev-tutorials/vitepress-guide)
+这个博客的搭建过程：技术选型、目录结构、配置详解、自定义主题、自动部署。
+
+### [GitHub Actions 自动化部署实战](/blogs/dev-tutorials/github-actions)
+从零配置到多环境部署，加速构建、缓存依赖、定时任务等实用技巧。
+
+### [Git 实用技巧：日常开发够用就行](/blogs/dev-tutorials/git-basics)
+撤销操作、分支管理、stash、rebase、blame 等日常高频 Git 操作，以及踩坑记录。
+
 ## 项目实战
 
 ### [构建 CLI 学习平台的技术选型与架构设计](/blogs/projects/cli-tutor)

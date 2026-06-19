@@ -29,6 +29,28 @@ export default {
     sidebar: {
       '/blogs/': [
         {
+          text: 'AI 教程',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            { text: 'Claude Code 入门到精通', link: '/blogs/ai-tutorials/claude-code-guide' },
+            { text: 'Prompt 工程实战', link: '/blogs/ai-tutorials/ai-prompt-engineering' },
+            { text: '搭建个人 AI 工作流', link: '/blogs/ai-tutorials/ai-workflow' },
+            { text: 'DeepSeek 使用指南', link: '/blogs/ai-tutorials/deepseek-guide' },
+            { text: 'AI 做独立开发的经验', link: '/blogs/ai-tutorials/indie-dev-ai' },
+          ]
+        },
+        {
+          text: '开发教程',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            { text: 'VitePress 搭建博客', link: '/blogs/dev-tutorials/vitepress-guide' },
+            { text: 'GitHub Actions 自动化', link: '/blogs/dev-tutorials/github-actions' },
+            { text: 'Git 实用技巧', link: '/blogs/dev-tutorials/git-basics' },
+          ]
+        },
+        {
           text: '项目实战',
           collapsed: false,
           collapsible: true,
