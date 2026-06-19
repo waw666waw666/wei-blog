@@ -10,7 +10,7 @@ function getNav() {
 export default {
   title: 'Wei',
   description: 'Wei 的博客',
-  base: '/',
+  base: '/wei-blog/',
   outDir: '../public',
 
   themeConfig: {
