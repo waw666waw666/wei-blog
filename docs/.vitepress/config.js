@@ -3,7 +3,6 @@ function getNav() {
     { text: '博客', link: '/blogs/' },
     { text: '项目', link: '/projects/' },
     { text: '周刊', link: '/weekly/' },
-    { text: '标签', link: '/blogs/tags' },
     { text: '简历', link: '/resume/' },
   ];
 }
