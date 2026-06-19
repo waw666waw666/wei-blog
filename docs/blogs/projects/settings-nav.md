@@ -1,3 +1,8 @@
+---
+tags:
+  - 工具
+  - Windows
+---
 # Windows 开发踩坑记：SettingsNav 的开发历程
 
 <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">

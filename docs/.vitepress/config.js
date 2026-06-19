@@ -3,15 +3,24 @@ function getNav() {
     { text: '博客', link: '/blogs/' },
     { text: '项目', link: '/projects/' },
     { text: '周刊', link: '/weekly/' },
+    { text: '标签', link: '/blogs/tags' },
     { text: '简历', link: '/resume/' },
   ];
 }
 
 export default {
   title: 'Wei',
-  description: 'Wei 的博客',
+  description: 'Wei 的个人博客 — AI 教程、开发实战、项目分享、独立开发经验',
   base: '/wei-blog/',
   outDir: '../public',
+
+  head: [
+    ['meta', { property: 'og:title', content: 'Wei' }],
+    ['meta', { property: 'og:description', content: 'Wei 的个人博客 — AI 教程、开发实战、项目分享、独立开发经验' }],
+    ['meta', { property: 'og:url', content: 'https://waw666waw666.github.io/wei-blog/' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+  ],
 
   themeConfig: {
     siteTitle: 'Wei',
@@ -116,6 +125,7 @@ export default {
           collapsible: true,
           items: [
             { text: '第一期', link: '/weekly/01' },
+            { text: '第二期', link: '/weekly/02' },
           ]
         }
       ],

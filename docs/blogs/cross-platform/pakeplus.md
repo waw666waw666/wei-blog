@@ -1,3 +1,8 @@
+---
+tags:
+  - 跨平台
+  - 打包
+---
 # 跨平台打包技术方案对比
 
 <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">

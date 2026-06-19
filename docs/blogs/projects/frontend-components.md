@@ -1,3 +1,9 @@
+---
+tags:
+  - 项目实战
+  - 前端
+  - 组件
+---
 # 51+ 组件的架构实践
 
 <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">

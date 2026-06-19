@@ -1,3 +1,8 @@
+---
+tags:
+  - 工具
+  - 前端
+---
 # 极简产品的设计哲学：3MB 待办应用的打磨
 
 <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">

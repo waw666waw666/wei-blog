@@ -1,3 +1,9 @@
+---
+tags:
+  - 项目实战
+  - CLI
+  - Claude
+---
 # 构建 CLI 学习平台的技术选型与架构设计
 
 <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">

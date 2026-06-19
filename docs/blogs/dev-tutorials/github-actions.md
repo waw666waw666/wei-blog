@@ -1,3 +1,9 @@
+---
+tags:
+  - 开发教程
+  - CI/CD
+  - GitHub
+---
 # GitHub Actions 自动化部署实战
 
 这个博客能自动部署到 GitHub Pages，全靠 GitHub Actions。分享一下我的配置过程和一些实用技巧。

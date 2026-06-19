@@ -1,3 +1,9 @@
+---
+tags:
+  - 项目实战
+  - Canvas
+  - 物理模拟
+---
 # Canvas 物理模拟从零开始
 
 <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">
