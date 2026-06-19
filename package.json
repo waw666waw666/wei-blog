@@ -1,0 +1,19 @@
+{
+  "name": "wei-blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs && node scripts/index",
+    "serve": "vitepress serve docs"
+  },
+  "devDependencies": {
+    "shelljs": "^0.8.5",
+    "vitepress": "^1.0.0-bate.1",
+    "vue": "^3.2.37"
+  },
+  "dependencies": {
+    "medium-zoom": "^1.0.8"
+  }
+}
