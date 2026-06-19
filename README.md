@@ -36,6 +36,16 @@ npm run build
 npm run serve
 ```
 
+## 使用与写作指南
+
+1. **新建文章**：
+   - 在 `docs/blogs/` 目录下新建 `.md` 文件（如 `my-post.md`）。
+   - 文件头部需编写 VitePress Frontmatter 信息（标题、日期等）。
+2. **本地预览**：运行 `npm run dev`，浏览器访问 `http://localhost:5173` 实时预览写作效果。
+3. **静态构建与发布**：
+   - 运行 `npm run build`，编译产物将输出在 `docs/.vitepress/dist` 目录下。
+   - 自定义图片资产保存在 `docs/images/`，打包脚本会自动将其处理至发布根目录下。
+
 ## 目录结构
 
 ```text
