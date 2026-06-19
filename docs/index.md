@@ -4,9 +4,6 @@ hero:
   name: Wei
   text: 个人技术博客
   tagline: Welcome!
-  image:
-    src: /images/logo.svg
-    alt: logo
   actions:
     - theme: brand
       text: 进入博客

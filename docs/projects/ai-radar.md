@@ -2,7 +2,12 @@
 
 **AI 行业情报自动推送**
 
-GitHub：[waw666waw666/ai-tg-radar-bot](https://github.com/waw666waw666/ai-tg-radar-bot)
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid #d0d7de;border-radius:6px;font-size:14px;">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="#24292f"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+  <a href="https://github.com/waw666waw666/ai-tg-radar-bot" target="_blank" style="color:#0969da;text-decoration:none;">waw666waw666/ai-tg-radar-bot</a>
+</span>
+
+## 项目简介
 
 RSS + DeepSeek + 飞书/Telegram，自动抓取 AI 行业资讯，经过 DeepSeek 总结后推送到飞书或 Telegram。
 
@@ -10,8 +15,24 @@ RSS + DeepSeek + 飞书/Telegram，自动抓取 AI 行业资讯，经过 DeepSee
 
 Python
 
-## 工作流
+## 工作流架构
 
-1. RSS 订阅源抓取最新 AI 资讯
-2. DeepSeek 模型智能摘要
-3. 推送到飞书群或 Telegram 频道
+```
+RSS 订阅源 → 内容抓取 → DeepSeek 摘要 → 飞书/TG 推送
+```
+
+### 1. 数据采集
+订阅多个 AI 相关 RSS 源，定时抓取最新文章。
+
+### 2. AI 处理
+使用 DeepSeek 模型对文章进行智能摘要，提取核心信息，过滤低质量内容。
+
+### 3. 多渠道推送
+支持飞书群机器人和 Telegram 频道两种推送方式，满足不同使用习惯。
+
+## 特点
+
+- 7x24 小时自动运行
+- AI 摘要，去粗取精
+- 多平台推送覆盖
+- 可自定义订阅源和推送频率

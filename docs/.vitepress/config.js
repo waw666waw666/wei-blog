@@ -29,29 +29,40 @@ export default {
     sidebar: {
       '/blogs/': [
         {
-          text: 'JavaScript',
+          text: '项目实战',
           collapsed: false,
           collapsible: true,
           items: [
-            { text: '数组去重', link: '/blogs/js/uniq' },
-            { text: '防抖与节流', link: '/blogs/js/debounce-throttle' },
-            { text: '类型判断', link: '/blogs/js/types' },
+            { text: 'CLI 学习平台', link: '/blogs/projects/cli-tutor' },
+            { text: 'Windows 设置启动器', link: '/blogs/projects/settings-nav' },
+            { text: '极简待办应用', link: '/blogs/projects/todo-app' },
+            { text: 'Win11 桌面提醒', link: '/blogs/projects/win11-reminder' },
+            { text: '前端组件平台', link: '/blogs/projects/frontend-components' },
+            { text: '文字水波纹', link: '/blogs/projects/pretext-ripple' },
           ]
         },
         {
-          text: 'Vue',
+          text: 'AI 与自动化',
           collapsed: false,
           collapsible: true,
           items: [
-            { text: '组件封装心得', link: '/blogs/vue/component' },
+            { text: 'AI 情报推送系统', link: '/blogs/ai/ai-radar' },
           ]
         },
         {
-          text: 'Vue3',
+          text: '跨平台开发',
           collapsed: false,
           collapsible: true,
           items: [
-            { text: '组合式 API 实践', link: '/blogs/vue3/composition-api' },
+            { text: '跨平台打包方案', link: '/blogs/cross-platform/pakeplus' },
+          ]
+        },
+        {
+          text: '工具开发',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            { text: '歌单迁移工具', link: '/blogs/tools/lx-music' },
           ]
         },
       ],
