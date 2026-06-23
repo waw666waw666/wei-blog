@@ -1,32 +1,59 @@
-﻿---
+---
 title: 互动命令行平台
 ---
+
 # 互动式 Claude 命令学习平台
 
 <div class="project-links-header">
-  <a href="https://claudelearn.top" target="_blank" class="badge bg-primary">👉 全屏在线学习</a>
-  <a href="https://github.com/waw666waw666/claude-cmd-tutor" target="_blank" class="badge bg-secondary">🔗 GitHub 源码</a>
+  <a href="https://claudelearn.top" target="_blank" class="badge bg-primary">👉 全屏在线体验</a>
+  <a href="https://github.com/waw666waw666/claude-cmd-tutor" target="_blank" class="badge bg-secondary">💻 GitHub 源码</a>
 </div>
 
 ## 项目简介
 
-**互动式命令学习平台** 是一款专为掌握复杂终端命令和 AI 助手交互指令而设计的在线学习应用。平台不仅收录了多达 118 个命令，更是通过高度拟真的 Terminal（终端模拟器）界面，让用户在真实的敲击中获得肌肉记忆。
+**互动式 Claude 命令学习平台** (Claude Cmd Tutor) 是一个专为开发者和 AI 爱好者设计的网页端模拟器环境。它完美复刻了真实的终端（Terminal）体验，并将其作为教学媒介，帮助用户沉浸式地学习和掌握 Claude 相关的命令行工具、Prompt 技巧及工作流自动化指令。
 
-配合情景驱动的关卡挑战系统与成就解锁机制，它将枯燥的命令行学习变成了一场充满乐趣与挑战的通关游戏。
+无论是初学者想熟悉基础命令，还是高级用户想测试复杂的脚本组合，都可以在这个安全的沙盒环境中自由练习。
 
 ## 核心特性
 
-- 🖥️ **全真终端模拟器**：支持高亮、历史记录、Tab 补全等核心 CLI 体验。
-- 📚 **118+ 核心命令库**：涵盖了日常高频使用的文件操作、进程管理以及智能对话指令。
-- 🏆 **情景化成就挑战**：内置多级任务关卡，在解决实际问题的过程中解锁学习成就。
-- 🔍 **智能检错提示**：实时解析输入命令，在执行失败时提供极具启发性的报错引导。
-- 🌓 **深邃暗色模式**：专注沉浸的极客风 UI 设计，保护视力的同时激发创造力。
+- 🖥️ **高保真终端模拟**：还原了真实的命令行界面，包括语法高亮、自动补全、命令历史（上下键）。
+- 🎓 **交互式教学**：内置课程体系，根据用户的命令输入实时给出反馈和下一步引导。
+- 🛡️ **安全沙盒环境**：所有命令仅在浏览器端模拟执行，无需担心损坏本地系统。
+- ⚙️ **可定制配置**：支持自定义终端主题色、字体大小和提示符样式。
 
-</style>
-## 图片预览
+## 互动预览
 
-<div class="image-preview">
-  <img src="/images/labs/cmd-tutor.png" alt="互动命令行平台预览" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
+您可以直接在下方无缝体验该项目：
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const wrapper = ref(null)
+const scale = ref(1)
+const targetWidth = 1280
+const targetHeight = 800
+
+onMounted(() => {
+  const updateScale = () => {
+    if (wrapper.value) {
+      scale.value = wrapper.value.clientWidth / targetWidth
+    }
+  }
+  
+  const observer = new ResizeObserver(updateScale)
+  if (wrapper.value) observer.observe(wrapper.value)
+  
+  updateScale()
+  
+  onUnmounted(() => {
+    observer.disconnect()
+  })
+})
+</script>
+
+<div class="iframe-wrapper" ref="wrapper" :style="{ height: (targetHeight * scale) + 'px' }">
+  <iframe src="https://claudelearn.top" :style="{ transform: 'scale(' + scale + ')' }"></iframe>
 </div>
 
 <style>
@@ -46,17 +73,24 @@ title: 互动命令行平台
 }
 .bg-primary { background-color: var(--vp-c-brand); }
 .bg-secondary { background-color: #333; }
-.image-preview {
+
+.iframe-wrapper {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1rem;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   background: var(--vp-c-bg-mute);
+  position: relative;
 }
-.image-preview img {
-  width: 100%;
-  display: block;
+.iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 800px;
+  border: none;
+  transform-origin: 0 0;
 }
 </style>

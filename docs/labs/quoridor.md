@@ -1,32 +1,60 @@
-﻿---
+---
 title: 路障棋网页版
 ---
+
 # 路障棋网页版 (Quoridor)
 
 <div class="project-links-header">
   <a href="https://waw666waw666.github.io/quoridor-game/" target="_blank" class="badge bg-primary">👉 全屏在线游玩</a>
-  <a href="https://github.com/waw666waw666/quoridor-game" target="_blank" class="badge bg-secondary">🔗 GitHub 源码</a>
+  <a href="https://github.com/waw666waw666/quoridor-game" target="_blank" class="badge bg-secondary">💻 GitHub 源码</a>
 </div>
 
 ## 项目简介
 
-**路障棋 (Quoridor)** 是一款极其经典的抽象策略桌游。在这个由现代网页技术构建的线上版本中，玩家可以在同一台设备上进行双人博弈，也可以选择与内置的 AI 对局。通过巧妙地移动棋子和放置墙壁，率先到达对岸的一方即可获胜。
+**路障棋 (Quoridor)** 是一款极具策略的经典桌游。在这个网页版中，你可以同机双人对弈，也可选择与内置的 AI 切磋。通过移动棋子和放置木墙阻挡对手，最先到达对边的一方即可获胜。
 
-该项目在保留桌游原汁原味核心规则的同时，加入了极具质感的 UI 设计和丝滑的交互动画。
+项目旨在还原原汁原味的规则，同时提供丝滑的 UI 和动画交互体验。
 
 ## 核心特性
 
-- 🎮 **双人对战**：支持本地双人同屏对战，完美复刻线下桌游体验。
-- 🤖 **单机 AI 对局**：内嵌 AI 引擎，提供不同难度选择，随时随地享受智力博弈。
-- 📜 **对局历史记录**：侧边栏实时记录双方动作，支持完整对局回放。
-- ↩️ **悔棋与提示**：支持随时撤销上一步，并带有 AI 支招功能帮助你打破僵局。
-- 💅 **精美视觉设计**：现代化的拟物风设计，操作音效与动画一应俱全。
+- 👥 **双人对战**：支持直接同机双人对战。
+- 🤖 **内置 AI 引擎**：不同难度深度的 AI，提供挑战。
+- 📜 **对局历史记录**：实时记录并支持对局回放。
+- 💡 **提示系统**：支持 AI 分析并给出最佳走法建议。
+- 🎨 **平滑视觉**：现代 UI 设计，动画效果和平滑响应。
 
-</style>
-## 图片预览
+## 互动预览
 
-<div class="image-preview">
-  <img src="/images/labs/quoridor.png" alt="路障棋网页版预览" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
+您可以直接在下方无缝体验该游戏：
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const wrapper = ref(null)
+const scale = ref(1)
+const targetWidth = 1280
+const targetHeight = 800
+
+onMounted(() => {
+  const updateScale = () => {
+    if (wrapper.value) {
+      scale.value = wrapper.value.clientWidth / targetWidth
+    }
+  }
+  
+  const observer = new ResizeObserver(updateScale)
+  if (wrapper.value) observer.observe(wrapper.value)
+  
+  updateScale()
+  
+  onUnmounted(() => {
+    observer.disconnect()
+  })
+})
+</script>
+
+<div class="iframe-wrapper" ref="wrapper" :style="{ height: (targetHeight * scale) + 'px' }">
+  <iframe src="https://waw666waw666.github.io/quoridor-game/" :style="{ transform: 'scale(' + scale + ')' }"></iframe>
 </div>
 
 <style>
@@ -46,17 +74,24 @@ title: 路障棋网页版
 }
 .bg-primary { background-color: var(--vp-c-brand); }
 .bg-secondary { background-color: #333; }
-.image-preview {
+
+.iframe-wrapper {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1rem;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   background: var(--vp-c-bg-mute);
+  position: relative;
 }
-.image-preview img {
-  width: 100%;
-  display: block;
+.iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 800px;
+  border: none;
+  transform-origin: 0 0;
 }
 </style>
