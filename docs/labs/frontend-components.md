@@ -1,6 +1,30 @@
 ﻿---
 title: 前端组件展示
 ---
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const wrapper = ref(null)
+const scale = ref(1)
+const targetWidth = 1280
+const targetHeight = 850
+
+const updateScale = () => {
+  if (wrapper.value) {
+    scale.value = wrapper.value.clientWidth / targetWidth
+  }
+}
+
+onMounted(() => {
+  updateScale()
+  window.addEventListener('resize', updateScale)
+  setTimeout(updateScale, 500)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScale)
+})
+</script>
 
 # 前端组件功能展示平台
 
@@ -23,4 +47,52 @@ title: 前端组件展示
 - 🪄 **SortableJS 拖拽封装**：针对列表排序和面板拖拽做出了流畅的物理动效优化。
 - 📝 **内置 AI Prompt 模板**：提供丰富的 AI 代码生成参考，提升日常研发效率。
 
+</style>
+
+## 互动预览
+
+您可以直接在下方无缝体验该项目：
+
+<ClientOnly>
+<div class="iframe-wrapper" ref="wrapper" :style="{ height: (targetHeight * scale) + 'px' }">
+  <iframe src="https://waw666waw666.github.io/frontend-components-skill/" :style="{ transform: 'scale(' + scale + ')' }"></iframe>
+</div>
+</ClientOnly>
+
+<style>
+.project-links-header {
+  margin: 1.5rem 0;
+  display: flex;
+  gap: 10px;
+}
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-decoration: none !important;
+  color: white !important;
+}
+.bg-primary { background-color: var(--vp-c-brand); }
+.bg-secondary { background-color: #333; }
+.iframe-wrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  position: relative;
+  background: var(--vp-c-bg-soft);
+  margin-top: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+.iframe-wrapper iframe {
+  width: 1280px;
+  height: 850px;
+  transform-origin: 0 0;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
