@@ -83,11 +83,10 @@ const startFocus = () => {
 
 <div class="iframe-container" :class="{ 'is-focused': isFocused }">
   <div class="iframe-wrapper" ref="wrapper" :style="{ height: isFirefox ? (targetHeight * scale) + 'px' : 'auto' }">
-    <iframe src="https://waw666waw666.github.io/pretext-ripple/" scrolling="no" :style="isFirefox ? { transform: 'scale(' + scale + ')' } : { zoom: scale }"></iframe>
-    
-    <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
+  <iframe src="https://waw666waw666.github.io/pretext-ripple/" scrolling="no" :style="isFirefox ? { transform: 'scale(' + scale + ')' } : { zoom: scale }"></iframe>
+  <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
       <div class="play-button">▶ 点击进入沉浸游玩</div>
-    </div>
+  </div>
   </div>
   <div v-if="isFocused" class="focus-hint">
     💡 正在沉浸游玩，锁定网页滚动。点击游戏外部任意区域即可退出。
