@@ -27,68 +27,111 @@ title: 路障棋网页版
 
 您可以直接在下方无缝体验该游戏：
 
+</div>
+  <div v-if="isFocused" class="focus-hint">
+    💡 正在沉浸游玩，锁定网页滚动。点击游戏外部任意区域即可退出。
+  </div>
+</div>
+
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const wrapper = ref(null)
-const scale = ref(1)
+const inlineScale = ref(1)
+const fullscreenScale = ref(1)
 const targetWidth = 1280
 const targetHeight = 800
-const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
 
 const isFocused = ref(false)
 
-const preventScroll = (e) => {
-  e.preventDefault()
-}
-
 onMounted(() => {
   const updateScale = () => {
-    if (wrapper.value) {
-      scale.value = wrapper.value.clientWidth / targetWidth
+    if (wrapper.value && !isFocused.value) {
+      inlineScale.value = wrapper.value.clientWidth / targetWidth
     }
+    fullscreenScale.value = Math.min(
+      (window.innerWidth * 0.9) / targetWidth,
+      (window.innerHeight * 0.9) / targetHeight
+    )
   }
   
   const observer = new ResizeObserver(updateScale)
   if (wrapper.value) observer.observe(wrapper.value)
+  window.addEventListener('resize', updateScale)
   
   updateScale()
   
-  const handleOutsideClick = (e) => {
-    if (isFocused.value && wrapper.value && !wrapper.value.contains(e.target)) {
-      isFocused.value = false
-      window.removeEventListener('wheel', preventScroll, { passive: false })
-      window.removeEventListener('touchmove', preventScroll, { passive: false })
-    }
-  }
-  
-  window.addEventListener('click', handleOutsideClick, true)
-  
   onUnmounted(() => {
     observer.disconnect()
-    window.removeEventListener('click', handleOutsideClick, true)
-    window.removeEventListener('wheel', preventScroll, { passive: false })
-    window.removeEventListener('touchmove', preventScroll, { passive: false })
+    window.removeEventListener('resize', updateScale)
+    document.body.style.overflow = ''
+    document.documentElement.style.overflow = ''
   })
 })
 
 const startFocus = () => {
   isFocused.value = true
-  // Lock scroll using events instead of overflow:hidden to prevent scrollbar shifting
-  window.addEventListener('wheel', preventScroll, { passive: false })
-  window.addEventListener('touchmove', preventScroll, { passive: false })
+  document.body.style.overflow = 'hidden'
+  document.documentElement.style.overflow = 'hidden'
 }
+
+const exitFocus = () => {
+  isFocused.value = false
+  document.body.style.overflow = ''
+  document.documentElement.style.overflow = ''
+}
+
+const wrapperStyle = computed(() => {
+  if (isFocused.value) {
+    return {
+      width: targetWidth + 'px',
+      height: targetHeight + 'px',
+      transform: `translate(-50%, -50%) scale(${fullscreenScale.value})`,
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      zIndex: 9999,
+      transformOrigin: 'center center'
+    }
+  } else {
+    return {
+      width: '100%',
+      height: (targetHeight * inlineScale.value) + 'px',
+      position: 'relative',
+      transform: 'none'
+    }
+  }
+})
+
+const iframeStyle = computed(() => {
+  if (isFocused.value) {
+    return {
+      width: '100%',
+      height: '100%',
+      transform: 'none'
+    }
+  } else {
+    return {
+      width: targetWidth + 'px',
+      height: targetHeight + 'px',
+      transform: `scale(${inlineScale.value})`,
+      transformOrigin: '0 0'
+    }
+  }
+})
 </script>
 
-<div class="iframe-container" :class="{ 'is-focused': isFocused }">
-  <div class="iframe-wrapper" ref="wrapper" :style="{ height: isFirefox ? (targetHeight * scale) + 'px' : 'auto' }">
-  <iframe src="https://waw666waw666.github.io/quoridor-game/" scrolling="no" :style="isFirefox ? { transform: 'scale(' + scale + ')' } : { zoom: scale }"></iframe>
+<div class="iframe-container">
+  <div v-if="isFocused" class="fullscreen-backdrop" @click="exitFocus"></div>
+  <div class="iframe-wrapper" ref="wrapper" :style="wrapperStyle" :class="{ 'is-focused': isFocused }">
+  <iframe src="https://waw666waw666.github.io/quoridor-game/" scrolling="no" :style="iframeStyle"></iframe>
   <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
-      <div class="play-button">▶ 点击进入沉浸游玩</div>
+      <div class="play-button">▶ 点击进入全屏游玩</div>
   </div>
   </div>
-  <div v-if="isFocused" class="focus-hint">
-    💡 正在沉浸游玩，锁定网页滚动。点击游戏外部任意区域即可退出。
+  
+  <div v-if="isFocused" class="focus-hint-fixed">
+    💡 正在全屏游玩。点击外部黑色区域退出。
   </div>
 </div>
 
@@ -114,25 +157,39 @@ const startFocus = () => {
   margin-top: 1.5rem;
 }
 .iframe-wrapper {
-  width: 100%;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   background: var(--vp-c-bg-mute);
-  position: relative;
-  overscroll-behavior: none;
   transition: all 0.3s;
 }
-.is-focused .iframe-wrapper {
-  box-shadow: 0 0 0 2px var(--vp-c-brand), 0 10px 40px rgba(0,0,0,0.4);
-  z-index: 100;
+.iframe-wrapper.is-focused {
+  box-shadow: 0 0 0 2px var(--vp-c-brand), 0 20px 60px rgba(0,0,0,0.5);
+}
+.fullscreen-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+}
+.focus-hint-fixed {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  z-index: 10000;
+  pointer-events: none;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 .iframe-wrapper iframe {
-  width: 1280px;
-  height: 800px;
   border: none;
-  transform-origin: 0 0;
   display: block;
 }
 .focus-overlay {
@@ -147,7 +204,6 @@ const startFocus = () => {
   align-items: center;
   cursor: pointer;
   z-index: 10;
-  backdrop-filter: blur(2px);
   transition: background 0.3s;
 }
 .focus-overlay:hover {
@@ -162,16 +218,5 @@ const startFocus = () => {
   font-weight: bold;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   pointer-events: none;
-}
-.focus-hint {
-  text-align: center;
-  margin-top: 0.8rem;
-  font-size: 0.9rem;
-  color: var(--vp-c-text-2);
-  animation: fadeIn 0.5s ease-in-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 </style>
