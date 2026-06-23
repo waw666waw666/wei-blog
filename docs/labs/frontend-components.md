@@ -2,30 +2,42 @@
 title: 前端组件展示
 ---
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
 const wrapper = ref(null)
 const scale = ref(1)
 const targetWidth = 1280
 const targetHeight = 850
+let observer = null
 
 const updateScale = () => {
   if (wrapper.value) {
-    scale.value = wrapper.value.clientWidth / targetWidth
+    const cw = wrapper.value.clientWidth
+    if (cw > 0) {
+      scale.value = cw / targetWidth
+    }
   }
 }
 
 onMounted(() => {
-  updateScale()
-  window.addEventListener('resize', updateScale)
-  setTimeout(updateScale, 500)
+  nextTick(() => {
+    updateScale()
+    if (wrapper.value) {
+      // Use ResizeObserver for highly reliable size tracking
+      observer = new ResizeObserver(() => {
+        updateScale()
+      })
+      observer.observe(wrapper.value)
+    }
+  })
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateScale)
+  if (observer && wrapper.value) {
+    observer.unobserve(wrapper.value)
+  }
 })
 </script>
-
 # 前端组件功能展示平台
 
 <div class="project-links-header">
@@ -52,12 +64,9 @@ onUnmounted(() => {
 ## 互动预览
 
 您可以直接在下方无缝体验该项目：
-
-<ClientOnly>
 <div class="iframe-wrapper" ref="wrapper" :style="{ height: (targetHeight * scale) + 'px' }">
   <iframe src="https://waw666waw666.github.io/frontend-components-skill/" :style="{ transform: 'scale(' + scale + ')' }"></iframe>
 </div>
-</ClientOnly>
 
 <style>
 .project-links-header {
@@ -94,5 +103,6 @@ onUnmounted(() => {
   position: absolute;
   top: 0;
   left: 0;
+  transition: transform 0.1s ease-out;
 }
 </style>
