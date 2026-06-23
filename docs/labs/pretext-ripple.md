@@ -26,11 +26,7 @@ title: 文字水波纹
 
 您可以直接在下方无缝体验该项目：
 
-</div>
-  <div v-if="isFocused" class="focus-hint">
-    💡 正在沉浸游玩，锁定网页滚动。点击游戏外部任意区域即可退出。
-  </div>
-</div>
+
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
