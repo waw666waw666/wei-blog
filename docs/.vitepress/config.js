@@ -2,6 +2,7 @@ function getNav() {
   return [
     { text: '博客', link: '/blogs/' },
     { text: '项目', link: '/projects/' },
+    { text: '在线预览', link: '/labs/' },
     { text: '周刊', link: '/weekly/' },
     { text: '简历', link: '/resume/' },
   ];
@@ -125,6 +126,20 @@ export default {
           items: [
             { text: '第一期', link: '/weekly/01' },
             { text: '第二期', link: '/weekly/02' },
+          ]
+        }
+      ],
+      '/labs/': [
+        {
+          text: '在线预览',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            { text: '项目橱窗', link: '/labs/' },
+            { text: '前端组件展示', link: '/labs/frontend-components' },
+            { text: '路障棋网页版', link: '/labs/quoridor' },
+            { text: '文字水波纹', link: '/labs/pretext-ripple' },
+            { text: '互动命令行平台', link: '/labs/claude-cmd-tutor' },
           ]
         }
       ],
