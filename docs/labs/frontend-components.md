@@ -35,6 +35,9 @@ const targetWidth = 1280
 const targetHeight = 800
 const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
 
+const isFocused = ref(false)
+let scrollTimeout = null
+
 onMounted(() => {
   const updateScale = () => {
     if (wrapper.value) {
@@ -47,14 +50,48 @@ onMounted(() => {
   
   updateScale()
   
+  const handleOutsideClick = (e) => {
+    if (isFocused.value && wrapper.value && !wrapper.value.contains(e.target)) {
+      isFocused.value = false
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+    }
+  }
+  
+  window.addEventListener('click', handleOutsideClick, true)
+  
   onUnmounted(() => {
     observer.disconnect()
+    window.removeEventListener('click', handleOutsideClick, true)
+    document.documentElement.style.overflow = ''
+    document.body.style.overflow = ''
+    clearTimeout(scrollTimeout)
   })
 })
+
+const startFocus = () => {
+  if (wrapper.value) {
+    wrapper.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+  scrollTimeout = setTimeout(() => {
+    isFocused.value = true
+    document.documentElement.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
+  }, 300)
+}
 </script>
 
-<div class="iframe-wrapper" ref="wrapper" :style="{ height: isFirefox ? (targetHeight * scale) + 'px' : 'auto' }">
-  <iframe src="https://waw666waw666.github.io/frontend-components-skill/" scrolling="no" :style="isFirefox ? { transform: 'scale(' + scale + ')' } : { zoom: scale }"></iframe>
+<div class="iframe-container" :class="{ 'is-focused': isFocused }">
+  <div class="iframe-wrapper" ref="wrapper" :style="{ height: isFirefox ? (targetHeight * scale) + 'px' : 'auto' }">
+    <iframe src="https://waw666waw666.github.io/frontend-components-skill/" scrolling="no" :style="isFirefox ? { transform: 'scale(' + scale + ')' } : { zoom: scale }"></iframe>
+    
+    <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
+      <div class="play-button">▶ 点击进入沉浸游玩</div>
+    </div>
+  </div>
+  <div v-if="isFocused" class="focus-hint">
+    💡 正在沉浸游玩，锁定网页滚动。点击游戏外部任意区域即可退出。
+  </div>
 </div>
 
 <style>
@@ -75,9 +112,11 @@ onMounted(() => {
 .bg-primary { background-color: var(--vp-c-brand); }
 .bg-secondary { background-color: #333; }
 
+.iframe-container {
+  margin-top: 1.5rem;
+}
 .iframe-wrapper {
   width: 100%;
-  margin-top: 1rem;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
@@ -85,6 +124,11 @@ onMounted(() => {
   background: var(--vp-c-bg-mute);
   position: relative;
   overscroll-behavior: none;
+  transition: all 0.3s;
+}
+.is-focused .iframe-wrapper {
+  box-shadow: 0 0 0 2px var(--vp-c-brand), 0 10px 40px rgba(0,0,0,0.4);
+  z-index: 100;
 }
 .iframe-wrapper iframe {
   width: 1280px;
@@ -92,5 +136,44 @@ onMounted(() => {
   border: none;
   transform-origin: 0 0;
   display: block;
+}
+.focus-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(2px);
+  transition: background 0.3s;
+}
+.focus-overlay:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+.play-button {
+  background: var(--vp-c-brand);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+.focus-hint {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: var(--vp-c-text-2);
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
