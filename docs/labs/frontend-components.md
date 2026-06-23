@@ -27,36 +27,43 @@ title: 前端组件展示
 您可以直接在下方无缝体验该项目：
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 
 const wrapper = ref(null)
 const scaleFactor = ref(1)
 const isFullscreen = ref(false)
+let observer = null
+
+const updateScale = () => {
+  if (!wrapper.value) return
+  const rect = wrapper.value.getBoundingClientRect()
+  const scaleX = rect.width / 1280
+  const scaleY = rect.height / 800
+  scaleFactor.value = Math.min(scaleX, scaleY)
+}
+
+watch(wrapper, (newVal) => {
+  if (newVal) {
+    updateScale()
+    if (!observer) {
+      observer = new ResizeObserver(updateScale)
+    }
+    observer.observe(newVal)
+  }
+})
 
 onMounted(() => {
-  const updateScale = () => {
-    if (!wrapper.value) return
-    const rect = wrapper.value.getBoundingClientRect()
-    const scaleX = rect.width / 1280
-    const scaleY = rect.height / 800
-    scaleFactor.value = Math.min(scaleX, scaleY)
-  }
-  
-  const observer = new ResizeObserver(updateScale)
-  if (wrapper.value) observer.observe(wrapper.value)
   window.addEventListener('resize', updateScale)
-  
-  updateScale()
   
   const handleFsChange = () => {
     isFullscreen.value = !!(document.fullscreenElement || document.webkitFullscreenElement)
-    setTimeout(updateScale, 100) // Ensure scale is recalculated after layout
+    setTimeout(updateScale, 100)
   }
   document.addEventListener('fullscreenchange', handleFsChange)
   document.addEventListener('webkitfullscreenchange', handleFsChange)
   
   onUnmounted(() => {
-    observer.disconnect()
+    if (observer) observer.disconnect()
     window.removeEventListener('resize', updateScale)
     document.removeEventListener('fullscreenchange', handleFsChange)
     document.removeEventListener('webkitfullscreenchange', handleFsChange)
