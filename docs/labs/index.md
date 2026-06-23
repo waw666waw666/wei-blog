@@ -1,21 +1,21 @@
----
+﻿---
 title: 在线预览
 ---
 
 # 在线预览
 
-欢迎来到**在线预览**板块。这里收集了可以直接在网页上运行或交互体验的独立项目。
+欢迎来到**在线预览**板块。这里收集了可以直接在网页上运行或交互体验的独立项目。你可以点击图片或标题进入项目的详细介绍页面。
 
 <div class="project-grid">
 
   <div class="project-card">
     <div class="project-image">
-      <a href="https://waw666waw666.github.io/frontend-components-skill/" target="_blank">
+      <a href="frontend-components.html">
         <img src="/images/labs/frontend.png" alt="前端组件展示" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
       </a>
     </div>
     <div class="project-info">
-      <h3>前端组件展示</h3>
+      <h3><a href="frontend-components.html">前端组件展示</a></h3>
       <p>基于 React + TypeScript + Ant Design + SortableJS 的前端组件功能展示平台。包含了大量可复用且精美的业务组件和交互演示。</p>
       <div class="project-links">
         <a href="https://waw666waw666.github.io/frontend-components-skill/" target="_blank" class="btn primary">在线体验</a>
@@ -26,12 +26,12 @@ title: 在线预览
 
   <div class="project-card">
     <div class="project-image">
-      <a href="https://waw666waw666.github.io/quoridor-game/" target="_blank">
+      <a href="quoridor.html">
         <img src="/images/labs/quoridor.png" alt="路障棋网页版" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
       </a>
     </div>
     <div class="project-info">
-      <h3>路障棋网页版</h3>
+      <h3><a href="quoridor.html">路障棋网页版</a></h3>
       <p>现代网页版路障棋 (Quoridor)，经典策略桌游。点击即可直接在线游玩，支持多人对抗逻辑，拥有流畅的动画效果和响应式界面。</p>
       <div class="project-links">
         <a href="https://waw666waw666.github.io/quoridor-game/" target="_blank" class="btn primary">在线体验</a>
@@ -42,12 +42,12 @@ title: 在线预览
 
   <div class="project-card">
     <div class="project-image">
-      <a href="https://waw666waw666.github.io/pretext-ripple/" target="_blank">
+      <a href="pretext-ripple.html">
         <img src="/images/labs/pretext.png" alt="文字水波纹" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
       </a>
     </div>
     <div class="project-info">
-      <h3>沉浸式文字水波纹</h3>
+      <h3><a href="pretext-ripple.html">沉浸式文字水波纹</a></h3>
       <p>基于 2D 离散波动方程的 Canvas 动画，呈现极具视觉冲击力的水波纹交互体验。鼠标或手指滑动即可感受细腻的物理波纹特效。</p>
       <div class="project-links">
         <a href="https://waw666waw666.github.io/pretext-ripple/" target="_blank" class="btn primary">在线体验</a>
@@ -58,12 +58,12 @@ title: 在线预览
 
   <div class="project-card">
     <div class="project-image">
-      <a href="https://claudelearn.top" target="_blank">
+      <a href="claude-cmd-tutor.html">
         <img src="/images/labs/cmd-tutor.png" alt="互动命令行平台" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
       </a>
     </div>
     <div class="project-info">
-      <h3>互动式命令学习平台</h3>
+      <h3><a href="claude-cmd-tutor.html">互动式命令学习平台</a></h3>
       <p>Claude Code 118个命令互动学习平台。通过模拟真实的终端体验和情景挑战，帮助开发者快速掌握复杂的命令操作和工作流。</p>
       <div class="project-links">
         <a href="https://claudelearn.top" target="_blank" class="btn primary">在线体验</a>
@@ -124,7 +124,14 @@ title: 在线预览
 .project-info h3 {
   margin: 0 0 8px 0;
   font-size: 1.2rem;
+}
+.project-info h3 a {
   color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.project-info h3 a:hover {
+  color: var(--vp-c-brand);
 }
 .project-info p {
   margin: 0 0 16px 0;
