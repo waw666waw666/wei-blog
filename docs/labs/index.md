@@ -10,7 +10,7 @@ title: 在线预览
 
   <a href="/wei-blog/labs/frontend-components.html" class="project-card">
     <div class="project-image">
-      <img src="/wei-blog/images/labs/frontend.png" alt="前端组件展示" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
+      <img src="/images/labs/frontend.png" alt="前端组件展示" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
     </div>
     <div class="project-info">
       <h3>前端组件展示</h3>
@@ -20,7 +20,7 @@ title: 在线预览
 
   <a href="/wei-blog/labs/quoridor.html" class="project-card">
     <div class="project-image">
-      <img src="/wei-blog/images/labs/quoridor.png" alt="路障棋网页版" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
+      <img src="/images/labs/quoridor.png" alt="路障棋网页版" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
     </div>
     <div class="project-info">
       <h3>路障棋网页版</h3>
@@ -30,7 +30,7 @@ title: 在线预览
 
   <a href="/wei-blog/labs/pretext-ripple.html" class="project-card">
     <div class="project-image">
-      <img src="/wei-blog/images/labs/pretext.png" alt="文字水波纹" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
+      <img src="/images/labs/pretext.png" alt="文字水波纹" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
     </div>
     <div class="project-info">
       <h3>沉浸式文字水波纹</h3>
@@ -40,7 +40,7 @@ title: 在线预览
 
   <a href="/wei-blog/labs/claude-cmd-tutor.html" class="project-card">
     <div class="project-image">
-      <img src="/wei-blog/images/labs/cmd-tutor.png" alt="互动命令行平台" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
+      <img src="/images/labs/cmd-tutor.png" alt="互动命令行平台" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23f0f0f0\'/><text x=\'50%\' y=\'50%\' fill=\'%23999\' font-family=\'sans-serif\' font-size=\'20\' text-anchor=\'middle\' dominant-baseline=\'middle\'>请放入你的图片</text></svg>'" />
     </div>
     <div class="project-info">
       <h3>互动式命令学习平台</h3>
