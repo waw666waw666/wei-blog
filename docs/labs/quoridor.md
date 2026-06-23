@@ -37,7 +37,10 @@ const targetHeight = 800
 const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
 
 const isFocused = ref(false)
-let scrollTimeout = null
+
+const preventScroll = (e) => {
+  e.preventDefault()
+}
 
 onMounted(() => {
   const updateScale = () => {
@@ -54,8 +57,8 @@ onMounted(() => {
   const handleOutsideClick = (e) => {
     if (isFocused.value && wrapper.value && !wrapper.value.contains(e.target)) {
       isFocused.value = false
-      document.documentElement.style.overflow = ''
-      document.body.style.overflow = ''
+      window.removeEventListener('wheel', preventScroll, { passive: false })
+      window.removeEventListener('touchmove', preventScroll, { passive: false })
     }
   }
   
@@ -64,21 +67,16 @@ onMounted(() => {
   onUnmounted(() => {
     observer.disconnect()
     window.removeEventListener('click', handleOutsideClick, true)
-    document.documentElement.style.overflow = ''
-    document.body.style.overflow = ''
-    clearTimeout(scrollTimeout)
+    window.removeEventListener('wheel', preventScroll, { passive: false })
+    window.removeEventListener('touchmove', preventScroll, { passive: false })
   })
 })
 
 const startFocus = () => {
-  if (wrapper.value) {
-    wrapper.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }
-  scrollTimeout = setTimeout(() => {
-    isFocused.value = true
-    document.documentElement.style.overflow = 'hidden'
-    document.body.style.overflow = 'hidden'
-  }, 300)
+  isFocused.value = true
+  // Lock scroll using events instead of overflow:hidden to prevent scrollbar shifting
+  window.addEventListener('wheel', preventScroll, { passive: false })
+  window.addEventListener('touchmove', preventScroll, { passive: false })
 }
 </script>
 
