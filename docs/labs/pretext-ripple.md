@@ -26,28 +26,20 @@ title: 文字水波纹
 
 您可以直接在下方无缝体验该项目：
 
-
-
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const wrapper = ref(null)
-const inlineScale = ref(1)
-const fullscreenScale = ref(1)
-const targetWidth = 1280
-const targetHeight = 800
-
-const isFocused = ref(false)
+const scaleFactor = ref(1)
+const isFullscreen = ref(false)
 
 onMounted(() => {
   const updateScale = () => {
-    if (wrapper.value && !isFocused.value) {
-      inlineScale.value = wrapper.value.clientWidth / targetWidth
-    }
-    fullscreenScale.value = Math.min(
-      (window.innerWidth * 0.95) / targetWidth,
-      (window.innerHeight * 0.95) / targetHeight
-    )
+    if (!wrapper.value) return
+    const rect = wrapper.value.getBoundingClientRect()
+    const scaleX = rect.width / 1280
+    const scaleY = rect.height / 800
+    scaleFactor.value = Math.min(scaleX, scaleY)
   }
   
   const observer = new ResizeObserver(updateScale)
@@ -56,80 +48,55 @@ onMounted(() => {
   
   updateScale()
   
+  const handleFsChange = () => {
+    isFullscreen.value = !!(document.fullscreenElement || document.webkitFullscreenElement)
+    setTimeout(updateScale, 100) // Ensure scale is recalculated after layout
+  }
+  document.addEventListener('fullscreenchange', handleFsChange)
+  document.addEventListener('webkitfullscreenchange', handleFsChange)
+  
   onUnmounted(() => {
     observer.disconnect()
     window.removeEventListener('resize', updateScale)
-    document.body.style.overflow = ''
-    document.documentElement.style.overflow = ''
+    document.removeEventListener('fullscreenchange', handleFsChange)
+    document.removeEventListener('webkitfullscreenchange', handleFsChange)
   })
 })
 
-const startFocus = () => {
-  isFocused.value = true
-  document.body.style.overflow = 'hidden'
-  document.documentElement.style.overflow = 'hidden'
-}
-
-const exitFocus = () => {
-  isFocused.value = false
-  document.body.style.overflow = ''
-  document.documentElement.style.overflow = ''
-}
-
-const wrapperStyle = computed(() => {
-  if (isFocused.value) {
-    return {
-      width: targetWidth + 'px',
-      height: targetHeight + 'px',
-      transform: `scale(${fullscreenScale.value})`,
-      transformOrigin: 'center center',
-      margin: '0',
-      flexShrink: 0
+const toggleFullscreen = async () => {
+  if (!isFullscreen.value) {
+    try {
+      if (wrapper.value.requestFullscreen) {
+        await wrapper.value.requestFullscreen()
+      } else if (wrapper.value.webkitRequestFullscreen) {
+        await wrapper.value.webkitRequestFullscreen()
+      }
+    } catch (err) {
+      console.error("Fullscreen failed:", err)
     }
   } else {
-    return {
-      width: '100%',
-      height: (targetHeight * inlineScale.value) + 'px',
-      position: 'relative',
-      transform: 'none',
-      margin: '0'
+    if (document.exitFullscreen) {
+      await document.exitFullscreen()
+    } else if (document.webkitExitFullscreen) {
+      await document.webkitExitFullscreen()
     }
   }
-})
-
-const iframeStyle = computed(() => {
-  if (isFocused.value) {
-    return {
-      width: '100%',
-      height: '100%',
-      transform: 'none'
-    }
-  } else {
-    return {
-      width: targetWidth + 'px',
-      height: targetHeight + 'px',
-      transform: `scale(${inlineScale.value})`,
-      transformOrigin: '0 0'
-    }
-  }
-})
+}
 </script>
 
 <div class="iframe-container">
   <ClientOnly>
-  <Teleport to="body" :disabled="!isFocused">
-      <div :class="isFocused ? 'fullscreen-mode' : 'inline-mode'" @click="isFocused && exitFocus()">
-        <div class="iframe-wrapper" ref="wrapper" :style="wrapperStyle" @click.stop>
-          <iframe src="https://waw666waw666.github.io/pretext-ripple/" scrolling="no" :style="iframeStyle"></iframe>
-          <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
-            <div class="play-button">▶ 点击进入全屏游玩</div>
-          </div>
-        </div>
-        <div v-if="isFocused" class="focus-hint-fixed">
-          💡 正在全屏游玩。点击外部黑色区域退出。
-        </div>
+  <div class="iframe-wrapper" ref="wrapper" :class="{ 'is-fullscreen': isFullscreen }">
+      <div class="iframe-scaler" :style="{ transform: `scale(${scaleFactor})` }">
+        <iframe src="https://waw666waw666.github.io/pretext-ripple/" scrolling="no"></iframe>
       </div>
-  </Teleport>
+      <div v-if="!isFullscreen" class="focus-overlay" @click.stop="toggleFullscreen">
+        <div class="play-button">▶ 开启原生全屏 (等比例缩放)</div>
+      </div>
+      <button v-if="isFullscreen" class="exit-btn" @click.stop="toggleFullscreen">
+        ✕ 退出全屏
+      </button>
+  </div>
   </ClientOnly>
 </div>
 
@@ -154,38 +121,36 @@ const iframeStyle = computed(() => {
 .iframe-container {
   margin-top: 1.5rem;
 }
-.inline-mode {
-  width: 100%;
-}
-.fullscreen-mode {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
-  z-index: 2147483647 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
 .iframe-wrapper {
+  width: 100%;
+  aspect-ratio: 1280 / 800;
+  background: #000;
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--vp-c-divider);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  background: var(--vp-c-bg-mute);
-  transition: transform 0.2s ease-out;
 }
-.fullscreen-mode .iframe-wrapper {
-  box-shadow: 0 0 0 2px var(--vp-c-brand), 0 20px 60px rgba(0,0,0,0.8);
+.iframe-wrapper.is-fullscreen {
+  border-radius: 0;
   border: none;
 }
-.iframe-wrapper iframe {
+.iframe-scaler {
+  width: 1280px;
+  height: 800px;
+  transform-origin: center center;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iframe-scaler iframe {
+  width: 1280px;
+  height: 800px;
   border: none;
-  display: block;
 }
 .focus-overlay {
   position: absolute;
@@ -214,13 +179,22 @@ const iframeStyle = computed(() => {
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   pointer-events: none;
 }
-.focus-hint-fixed {
-  margin-top: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+.exit-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 8px 16px;
+  border-radius: 8px;
   font-size: 1rem;
-  z-index: 10000;
-  pointer-events: none;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  font-weight: bold;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all 0.2s;
+}
+.exit-btn:hover {
+  background: rgba(255,0,0,0.8);
+  border-color: #fff;
 }
 </style>
