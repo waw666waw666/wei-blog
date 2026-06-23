@@ -50,8 +50,8 @@ onMounted(() => {
       inlineScale.value = wrapper.value.clientWidth / targetWidth
     }
     fullscreenScale.value = Math.min(
-      (window.innerWidth * 0.9) / targetWidth,
-      (window.innerHeight * 0.9) / targetHeight
+      (window.innerWidth * 0.95) / targetWidth,
+      (window.innerHeight * 0.95) / targetHeight
     )
   }
   
@@ -86,19 +86,18 @@ const wrapperStyle = computed(() => {
     return {
       width: targetWidth + 'px',
       height: targetHeight + 'px',
-      transform: `translate(-50%, -50%) scale(${fullscreenScale.value})`,
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      zIndex: 9999,
-      transformOrigin: 'center center'
+      transform: `scale(${fullscreenScale.value})`,
+      transformOrigin: 'center center',
+      margin: '0',
+      flexShrink: 0
     }
   } else {
     return {
       width: '100%',
       height: (targetHeight * inlineScale.value) + 'px',
       position: 'relative',
-      transform: 'none'
+      transform: 'none',
+      margin: '0'
     }
   }
 })
@@ -122,18 +121,21 @@ const iframeStyle = computed(() => {
 </script>
 
 <div class="iframe-container">
+  <ClientOnly>
   <Teleport to="body" :disabled="!isFocused">
-  <div v-if="isFocused" class="fullscreen-backdrop" @click="exitFocus"></div>
-  <div class="iframe-wrapper" ref="wrapper" :style="wrapperStyle" :class="{ 'is-focused': isFocused }">
-      <iframe src="https://waw666waw666.github.io/quoridor-game/" scrolling="no" :style="iframeStyle"></iframe>
-      <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
-        <div class="play-button">▶ 点击进入全屏游玩</div>
+      <div :class="isFocused ? 'fullscreen-mode' : 'inline-mode'" @click="isFocused && exitFocus()">
+        <div class="iframe-wrapper" ref="wrapper" :style="wrapperStyle" @click.stop>
+          <iframe src="https://waw666waw666.github.io/quoridor-game/" scrolling="no" :style="iframeStyle"></iframe>
+          <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
+            <div class="play-button">▶ 点击进入全屏游玩</div>
+          </div>
+        </div>
+        <div v-if="isFocused" class="focus-hint-fixed">
+          💡 正在全屏游玩。点击外部黑色区域退出。
+        </div>
       </div>
-  </div>
-  <div v-if="isFocused" class="focus-hint-fixed">
-      💡 正在全屏游玩。点击外部黑色区域退出。
-  </div>
   </Teleport>
+  </ClientOnly>
 </div>
 
 <style>
@@ -157,37 +159,34 @@ const iframeStyle = computed(() => {
 .iframe-container {
   margin-top: 1.5rem;
 }
+.inline-mode {
+  width: 100%;
+}
+.fullscreen-mode {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2147483647 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
 .iframe-wrapper {
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   background: var(--vp-c-bg-mute);
-  transition: all 0.3s;
+  transition: transform 0.2s ease-out;
 }
-.iframe-wrapper.is-focused {
-  box-shadow: 0 0 0 2px var(--vp-c-brand), 0 20px 60px rgba(0,0,0,0.5);
-}
-.fullscreen-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(4px);
-  z-index: 9998;
-}
-.focus-hint-fixed {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-  z-index: 10000;
-  pointer-events: none;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+.fullscreen-mode .iframe-wrapper {
+  box-shadow: 0 0 0 2px var(--vp-c-brand), 0 20px 60px rgba(0,0,0,0.8);
+  border: none;
 }
 .iframe-wrapper iframe {
   border: none;
@@ -219,5 +218,14 @@ const iframeStyle = computed(() => {
   font-weight: bold;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   pointer-events: none;
+}
+.focus-hint-fixed {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  z-index: 10000;
+  pointer-events: none;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  font-weight: bold;
 }
 </style>
