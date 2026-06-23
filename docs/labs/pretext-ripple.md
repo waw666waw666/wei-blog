@@ -33,6 +33,7 @@ const wrapper = ref(null)
 const scale = ref(1)
 const targetWidth = 1280
 const targetHeight = 800
+const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
 
 onMounted(() => {
   const updateScale = () => {
@@ -52,8 +53,8 @@ onMounted(() => {
 })
 </script>
 
-<div class="iframe-wrapper" ref="wrapper" :style="{ height: (targetHeight * scale) + 'px' }">
-  <iframe src="https://waw666waw666.github.io/pretext-ripple/" :style="{ transform: 'scale(' + scale + ')' }"></iframe>
+<div class="iframe-wrapper" ref="wrapper" :style="{ height: isFirefox ? (targetHeight * scale) + 'px' : 'auto' }">
+  <iframe src="https://waw666waw666.github.io/pretext-ripple/" scrolling="no" :style="isFirefox ? { transform: 'scale(' + scale + ')' } : { zoom: scale }"></iframe>
 </div>
 
 <style>
@@ -83,14 +84,13 @@ onMounted(() => {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   background: var(--vp-c-bg-mute);
   position: relative;
+  overscroll-behavior: none;
 }
 .iframe-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 1280px;
   height: 800px;
   border: none;
   transform-origin: 0 0;
+  display: block;
 }
 </style>
