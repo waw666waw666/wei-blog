@@ -122,17 +122,18 @@ const iframeStyle = computed(() => {
 </script>
 
 <div class="iframe-container">
+  <Teleport to="body" :disabled="!isFocused">
   <div v-if="isFocused" class="fullscreen-backdrop" @click="exitFocus"></div>
   <div class="iframe-wrapper" ref="wrapper" :style="wrapperStyle" :class="{ 'is-focused': isFocused }">
-  <iframe src="https://waw666waw666.github.io/quoridor-game/" scrolling="no" :style="iframeStyle"></iframe>
-  <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
-      <div class="play-button">▶ 点击进入全屏游玩</div>
+      <iframe src="https://waw666waw666.github.io/quoridor-game/" scrolling="no" :style="iframeStyle"></iframe>
+      <div v-if="!isFocused" class="focus-overlay" @click.stop="startFocus">
+        <div class="play-button">▶ 点击进入全屏游玩</div>
+      </div>
   </div>
-  </div>
-  
   <div v-if="isFocused" class="focus-hint-fixed">
-    💡 正在全屏游玩。点击外部黑色区域退出。
+      💡 正在全屏游玩。点击外部黑色区域退出。
   </div>
+  </Teleport>
 </div>
 
 <style>
